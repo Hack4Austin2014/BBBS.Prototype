@@ -1,0 +1,120 @@
+@import url(http://fonts.googleapis.com/css?family=Strait|Covered+By+Your+Grace); /* Google fonts */
+html body {
+	background-color: #8E44AD;
+}
+
+h1{
+	color: #7AC142 !important;
+	column-span:all
+	-webkit-column-span:all; /* Safari and Chrome */
+	font-family: 'Covered By Your Grace', cursive;
+}
+
+fa{
+	color:#fff !important;
+}
+#loading-text{
+	font-family: 'Strait', sans-serif;
+	color: #fff;
+	padding-top: 10px;	
+}
+
+.esriSimpleSliderTL{
+	top: 80px;
+}
+
+.ui-accordion-content{
+	font-size: 14px !important;
+}
+
+
+.ui-widget
+{
+font-family: 'Strait', sans-serif !important;
+font-size: .5 em;
+
+
+}
+
+.hideMenu{
+visibility: hidden !important;
+}
+
+.showMenu{
+visibility: visible !important;
+}
+
+
+.app-name{
+	font-family: 'Covered By Your Grace', cursive;
+	color: #fff;
+	font-weight: bold;
+	font-size: 25px;
+	text-align: center;
+	background-color: #AA99DD; 
+	width: 70%; 
+	margin: 0 auto;
+	border-radius: 20px;
+	
+}
+.app-title{
+	font-family: 'Covered By Your Grace', cursive;
+	color: #fff;
+	font-weight: bold;
+	font-size: 2em;
+	text-align: center;
+	background-color: #AA99DD;
+	padding-top: 10px;
+	width: 100%; 
+	margin: -44px 0px 10px 0px;
+	border-radius: 15px;
+}
+
+.centered{
+    float: none;
+    margin: 0 auto;
+	text-align: center;
+	
+}
+
+.eventHolder{
+	padding-top: 10px;
+
+
+}
+
+/* http://www.smashingmagazine.com/2013/08/09/absolute-horizontal-vertical-centering-css/  */
+.absolute-center {
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.center-container {
+  position: relative;
+}
+
+
+
+/* http://stackoverflow.com/questions/396145/whats-the-best-way-of-centering-a-div-vertically-with-css */
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto; 
+    width: 300px;
+	text-align: center;
+}
