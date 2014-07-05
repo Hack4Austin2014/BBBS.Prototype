@@ -1,5 +1,5 @@
 
-var fb = new Firebase('https://amber-fire-6558.firebaseio.com');
+var fb = new Firebase($FIREBASE_URL_DEV);
 
 var auth = new FirebaseSimpleLogin(fb, function (error, user){
 	if(error){
@@ -45,7 +45,7 @@ var loginHTML = '<div class="form-horizontal" role="form">\
 
 
 function loadContent (){
-	$.get('/projects/bbbs/pages/inputEvent.html', null, function (mydata, textStatus, jqXHR){
+	$.get('../pages/inputEvent.html', null, function (mydata, textStatus, jqXHR){
 		$("#main-content").html(mydata);
 	});
 }
