@@ -16,7 +16,7 @@
 
 	<meta name="keywords" content="BBBS, hack,hackathon, hack4austin, big, brothers, sisters, kids, places, locations, events, cheap, free, place, food, fun, children, child">
 
-	<base href="//josemanriquez.com/projects/bbbs/">
+	<base href="/">
 
 	
 
@@ -46,7 +46,7 @@
 
 	
 
-	<link href="//josemanriquez.com/projects/bbbs/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">	
+	<link href="/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">	
 
 	<link rel="stylesheet" href="css/main-style.css"> <!-- Custom CSS styles-->
 
