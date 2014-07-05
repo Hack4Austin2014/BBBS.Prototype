@@ -1,5 +1,5 @@
 
-var fb = new Firebase($FIREBASE_URL_DEV);
+var fb = new Firebase($FIREBASE_URL);
 
 var auth = new FirebaseSimpleLogin(fb, function (error, user){
 	if(error){
