@@ -9,10 +9,11 @@ var auth = new FirebaseSimpleLogin(fb, function (error, user){
 		      case 'INVALID_USER': msg = "The specified email address isn't registered as a user."; break;
 		      case 'INVALID_EMAIL': msg = "The specified email address is incorrect."; break;
 		      case 'INVALID_PASSWORD': msg = "The specified password is incorrect."; break;
-		      default: msg = "There was an error loggin in.";
+		      default: msg = "There was an error logging in.";
 		    }
 
 		alert(msg);
+		displayLoginForm();
 	}
 	else if(user){
 		loadContent();
@@ -59,6 +60,8 @@ function displayLoginForm(){
 }
 
 var login = function (){
+   	$("#main-content").append('<i class="fa fa-spinner fa-spin"></i> Loading...');
+
    	var user_email = $('#inputEmail3').val();
    	var user_password = $('#inputPassword3').val();
    	auth.login('password', {
