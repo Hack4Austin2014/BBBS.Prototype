@@ -24,9 +24,10 @@
 	<link rel="stylesheet" href="css/main-style.css"> <!-- Custom CSS styles-->
 
 	<style>
+		/*
 		.small-menu {display: none !important;}
 		.large-menu {display: none! important;}
-		
+		*/
 		/* iphone */
 		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 			img { max-width: 100%; }
@@ -117,7 +118,7 @@
 
 	<!-- NAV BAR FOR BIG SCREENS!!! -->
 
-    <div id="large-menu" class="navbar navbar-inverse navbar-fixed-top hideElement" role="navigation">
+    <div id="large-menu" class="navbar navbar-inverse navbar-fixed-top " role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -289,7 +290,7 @@
 			$('#splashscreen').fadeOut('slow', function()
 			{
 				/*jQuery('#small-menu').addClass('visible-xs');*/
-				jQuery('#large-menu').addClass('visible-md visible-lg showMenu');
+				/*jQuery('#large-menu').addClass('visible-md visible-lg showMenu');*/
 				jQuery('#large-menu').removeClass('hideElement');
 			});
 			jQuery('#loading').addClass('deleteElement');
