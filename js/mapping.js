@@ -403,9 +403,9 @@ console.log('GetEvents');
             arrayTest.push(userSnap);
             var info = userSnap.val(); 
             // console.log(userSnap.val());
-			resultHtml = "<img src='images/eventpics/" + info.picture + "' width='60px' height='60px'>" + "&nbsp;&nbsp;&nbsp;"+info.title +"&nbsp; &nbsp;"+(Math.floor(Math.random() * 5) + 1)+"&nbsp;<i class='fa fa-star'></i>"  +"&nbsp;&nbsp;&nbsp;("+info.datebegin+")"+ "<br/>";
+			resultHtml = "<img src='images/eventpics/" + info.picture + "' width='60px' height='60px'/>" + "&nbsp;&nbsp;&nbsp;"+info.title +"&nbsp; &nbsp;"+(Math.floor(Math.random() * 5) + 1)+"&nbsp;<i class='fa fa-star'></i>"  +"&nbsp;&nbsp;&nbsp;("+info.datebegin+")"+ "<br/>";
 			detailHtml = "<h6>Description: </h6>"+info.description + "<br><b>Age Range: </b>" +info.agerange+"<br><b>Price Range: </b>"+info.pricerange + "<br><b>Interval: </b>"+info.interval+"<br><b>Category: </b>"+info.category; 
-			$('#accordion').append('<h3>' + info.title + '</h3><div>'+ info.description  +'</div>'); 
+			$('#accordion').append('<div style="font-size:14px;">' + info.title + '</div><div">'+ info.description  +'</div>'); 
       console.log(resultHtml); 
       console.log(detailHtml); 
             ids.splice(i, 1);
@@ -414,7 +414,6 @@ console.log('GetEvents');
 		
 		$(  '#accordion' ).accordion( "refresh" ); 
 		redirect();
-				
       }
 	  
 //	  acc.destroy(); 
