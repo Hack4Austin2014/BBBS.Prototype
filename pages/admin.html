@@ -41,7 +41,7 @@
 
 		<!--[if lte IE 7]><link rel="css/old-centering.css /><![endif]-->
 
-	<link href="css/flat-ui.css" rel="stylesheet">
+	<link href="../css/flat-ui.css" rel="stylesheet">
 
 		
 
@@ -164,93 +164,51 @@
 	<!-- NAV BAR FOR BIG SCREENS!!! -->
 
     <div id="large-menu" class="navbar navbar-inverse navbar-fixed-top hideMenu" role="navigation">
-
       <div class="container">
-
         <div class="navbar-header">
-
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-
             <span class="sr-only">Toggle navigation</span>
-
             <span class="icon-bar"></span>
-
             <span class="icon-bar"></span>
-
             <span class="icon-bar"></span>
-
           </button>
-
-          <a class="navbar-brand" href="/"><img src="images/logo.png" height="35x;" style="margin-top:-10px;"/></a>
-
+          <a class="navbar-brand" href="#"><img src="../images/logo.png" height="35x;" style="margin-top:-10px;"/></a>
         </div>
-
         <div class="navbar-collapse collapse">
-
           <ul class="nav navbar-nav">
-
+		    <li><a href="../index.html">Events</a></li>
 			<li><a href="pages/admin.html">Admin</a></li>
-
             <li class="dropdown">
-
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us <b class="caret"></b></a>
-
               <span class="dropdown-arrow"></span>
-
               <ul class="dropdown-menu" style="overflow: hidden;">
-
-                <li><a href="#">Big Brothers Big Sisters</a></li>
-
+                <li><a href="../index.html">Events</a></li>
+				<li><a href="#">Big Brothers Big Sisters</a></li>
                 <li><a href="#">BBBS Central Texas</a></li>
-
                 <li><a href="#">The Web Dev Team</a></li>
-
                 <li class="divider"></li>
-
                 <li><a href="#">Support Us!</a></li>
-
               </ul>
-
             </li>
-
           </ul>
-
           <ul class="nav navbar-nav navbar-right">
-
 			<li><a href="#" onclick="getLocation();">Find Me</a></li>
-
             <li> 
-
 				<form class="navbar-form navbar-right" action="#" role="search">
-
 			      <div class="form-group">
-
 			        <div class="input-group">
-
 			          <input class="form-control"  id="address" type="search" placeholder="Search Address">
-
 			          <span class="input-group-btn"> 					  
-
 			            <button id="locate"  type="button"  class="searchbtn" onclick="locate();" > Hey!</button>
-
 			          </span>            
-
 			        </div>
-
 			      </div>               
-
 			    </form>
-
 			</li>
-
           </ul>
-
         </div><!--/.nav-collapse -->
-
       </div>
-
     </div>
-
 	
 
 	
@@ -259,17 +217,10 @@
 
 	
 
-	
 
 
 
-	
-
-	
-
-
-
-	<div id="small-menu" class="visible-xs" >
+	<div id="small-menu" class="" >
 
 		
 
@@ -294,41 +245,24 @@
             </div>
 
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
-
-              <ul class="nav navbar-nav navbar-left" style="overflow: hidden;">           
-
+              <ul class="nav navbar-nav navbar-left" style="overflow: hidden;"> 
+				<li><a href="../index.html">Events</a></li>		  
                 <li><a href="pages/admin.html">Admin</a></li>
-
                 <li><a href="pages/comingSoon.html">Map</a></li>
-
 				<li class="dropdown">
-
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us <b class="caret"></b></a>
-
                   <span class="dropdown-arrow"></span>
-
                   <ul class="dropdown-menu" style="overflow: hidden;">
-
                     <li><a href="http://www.bbbs.org">Big Brothers Big Sisters</a></li>
-
                     <li><a href="http://bigmentoring.org">BBBS Central Texas</a></li>
-
                     <li><a href="pages/comingSoon.html">The Web Dev Team</a></li>
-
                     <li class="divider"></li>
-
                     <li><a href="http://github.com/Hack4Austin2014/BBBS.Alfa">Support Us!</a></li>
-
                   </ul>
-
                 </li>
-
                </ul>
-
-            </div><!-- /.navbar-collapse -->
-
+           </div><!-- /.navbar-collapse -->
           </nav><!-- /navbar -->
-
         </div>
 
 	
@@ -388,18 +322,12 @@
 	<!-- JS FILES-->
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script><!-- jquery -->
-
 	<script src='//cdn.firebase.com/js/client/1.0.15/firebase.js'></script><!--firebase -->
-
 	<script src='//cdn.firebase.com/js/simple-login/1.4.1/firebase-simple-login.js'></script>
-
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> <!-- bootstrap -->
-
-	<script src="js/config.js"></script>
-
-	<script src="js/login.js"></script>
-
-	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../js/config.js"></script>
+	<script src="../js/login.js"></script>
+	<script src="../js/jquery-ui-1.10.4.custom.min.js"></script>
 
 	<!-- 
 
