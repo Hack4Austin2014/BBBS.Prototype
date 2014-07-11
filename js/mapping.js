@@ -411,7 +411,6 @@ console.log('GetEvents');
             ids.splice(i, 1);
           }
         });
-		
 		$(  '#accordion' ).accordion( "refresh" ); 
 		redirect();
       }

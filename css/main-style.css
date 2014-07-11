@@ -1,48 +1,20 @@
 @import url(http://fonts.googleapis.com/css?family=Strait|Covered+By+Your+Grace); /* Google fonts */
-html body {
-	background-color: #8E44AD;
-}
+html body {	background-color: #8E44AD;}
 
-h1{
-	color: #7AC142 !important;
-	column-span:all
-	-webkit-column-span:all; /* Safari and Chrome */
-	font-family: 'Covered By Your Grace', cursive;
-}
+h1{	color: #7AC142 !important;	column-span:all	-webkit-column-span:all; /* Safari and Chrome */	font-family: 'Covered By Your Grace', cursive;}
 
-fa{
-	color:#fff !important;
-}
-#loading-text{
-	font-family: 'Strait', sans-serif;
-	color: #fff;
-	padding-top: 10px;	
-}
+fa{	color:#fff !important;}
+#loading-text{	font-family: 'Strait', sans-serif;	color: #fff;	padding-top: 10px;	}
+
+.esriSimpleSliderTL{	top: 80px;}
 
-.esriSimpleSliderTL{
-	top: 80px;
-}
-
-.ui-accordion-content{
-	font-size: 14px !important;
-}
+.ui-accordion-content{	font-size: 14px !important;}
 
 
-.ui-widget
-{
-font-family: 'Strait', sans-serif !important;
-font-size: .5 em;
+.ui-widget{font-family: 'Strait', sans-serif !important;font-size: .5 em;}
 
-
-}
-
-.hideMenu{
-visibility: hidden !important;
-}
-
-.showMenu{
-visibility: visible !important;
-}
+.hideElement{visibility: hidden !important;}.deleteElement{display: none !important;}
+.showElement{visibility: visible !important;}.addElement{display: inblock !important;}
 
 
 .app-name{
