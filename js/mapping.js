@@ -383,7 +383,7 @@ function GetEvents(ids)
 
 console.log('GetEvents');
   var arrayTest = new Array();
-  var fb = new Firebase("https://amber-fire-6558.firebaseio.com/data/events");
+  var fb = new Firebase($FIREBASE_URL);
 
   //$('#InfoDiv').empty(); 
   fb.once('value', function(snapshot) {
