@@ -6,7 +6,7 @@ Functional prototype of the BBBS Events app for demonstration purposes
 
 #API Spec:
 
-```JSON
+```
 data : {
 	events : {
 		event_id : {	//event_id is a string assigned by firebase when it is stored in the database
