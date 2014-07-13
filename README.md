@@ -100,7 +100,7 @@ data : {
 **Note**: This is still in development; once we have a functional prototype, we will move all development to a `dev` branch and leave the `master` branch as the current release. Stay tuned for details on configuring your firebase, defining your firebase URL in the javascript, and any installation/hosting details.
 
 ##Road Map
-We plan on finishing the prototype such that it will be all static HTML, JavaScript, and CSS files and can be hosted on any static web page server. This, coupled with your [firebase plan](https://www.firebase.com/pricing.html) of choice, should remove the need for any server-side coding. Depending on your database connection needs, you might get by with the free firebase hacker plan. Otherwise, you simply pay for your connection needs. (Stay tuned for firebase configuration instructions).
+We plan on finishing the prototype such that it will be all static HTML, JavaScript, and CSS files and can be hosted on any static web page server. This, coupled with your [firebase plan](https://www.firebase.com/pricing.html) of choice, should remove the need for any server-side coding. Depending on your database connection needs, you might get by with the free firebase hacker plan. Otherwise, you simply pay for your connection needs. 
 
 We have on the horizon the vision to make a sequel server version, so you can host it all locally on a server you have access to. Also, this was born at a hackathon, so we didn't get a chance to use any JS frameworks; however, future versions may be rewritten in AngularJS and possibly use Google Maps API or the new firebase [Geofire](https://github.com/firebase/geofire/).
 
