@@ -6,7 +6,7 @@ Functional prototype of the BBBS Events app for demonstration purposes
 
 ##API Spec:
 
-Firebase RESTful API URL: https://[firebase].firebaseIO.com/[path/to/json/object].json
+Firebase RESTful API URL: `https://[firebase].firebaseIO.com/[path/to/json/object].json`
 
 With the firebase RESTful API, `GET` returns the json data, `PUT` *replaces* the json data, and `POST` appends to the json data.
 
