@@ -23,7 +23,7 @@ data : {
 	events : {
 		event_id : {	//event_id is a string assigned by firebase
 			address 	: 	{
-				street1 : `string` 	// ie: "201 Colorado"
+				street1 : string 	// ie: "201 Colorado"
 				street2 : string	// ie: "Apt 5"
 				city 	: string	// ie: "Austin"
 				state	: string	// ie: "TX"
@@ -32,7 +32,7 @@ data : {
 
 			agerange 	:	string	// one of ageranges (see below)
 
-			category 	:	string	// one of categories (see below)
+			category 	:	[string]	// zero or more of categories (see below)
 
 			datebegin	:	string	// milliseconds since Jan 1, 1970 ie: "1405043349696"; see JS Date object
 
@@ -40,11 +40,11 @@ data : {
 
 			picture		:	string	// full URL of the picture to include
 
-			pricerange	:	int		// one of [0, 1, 2, 3, 4, 5]
+			pricerange	:	int		// one of priceranges (see below)
 
 			promoted	:	boolean
 
-			rating		:	int		// one of [0, 1, 2, 3, 4, 5]
+			rating		:	int		// one of ratings (see below)
 
 			title		:	string
 
@@ -63,19 +63,19 @@ data : {
 				zip		: string	// ie: "78759"
 			}
 
-			agerange 	:	string	// one of ["6-10", "11-14", "15-18"]
+			agerange 	:	string	// one of ageranges (see below)
 
-			category 	:	string	// one of ["Educational", "Arts/Music", "Sports", "Outdoors", "Discount Partner", "Other"]
+			category 	:	[string]	// zero or more of categories (see below)
 
 			description	:	string
 
 			picture		:	string	// full URL of the picture to include
 
-			pricerange	:	int		// one of [0, 1, 2, 3, 4, 5]
+			pricerange	:	int		// one of priceranges (see below)
 
 			promoted	:	boolean
 
-			rating		:	int		// one of [0, 1, 2, 3, 4, 5]
+			rating		:	int		// one of ratings (see below)
 
 			schedule	:	string	// human-readable, ie: "M-F 9am-5pm". Not programmatically parsed.
 
@@ -90,5 +90,7 @@ data : {
 	ratings : [int]
 
 	ageranges : [string]
+
+	priceranges : [int]
 }
 ```
