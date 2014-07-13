@@ -383,7 +383,7 @@ function GetEvents(ids)
 
 console.log('GetEvents');
   var arrayTest = new Array();
-  var fb = new Firebase($FIREBASE_URL);
+  var fb = new Firebase($FIREBASE_URL + '/data/events');
 
   //$('#InfoDiv').empty(); 
   fb.once('value', function(snapshot) {
