@@ -6,7 +6,19 @@ Functional prototype of the BBBS Events app for demonstration purposes
 
 ##API Spec:
 
-```
+Firebase RESTful API URL: https://[firebase].firebaseIO.com/[path/to/json/object].json
+
+With the firebase RESTful API, `GET` returns the json data, `PUT` *replaces* the json data, and `POST` appends to the json data.
+
+Our project is using the firebase JavaScript library. 
+
+Our data is stored in the firebase as described below. `events` is an object containing event objects, where each key is the string assigned by firebase when it is stored, and each value is the event object associated with that string.
+
+`events` represents a collection of single, well-defined events with a beginning date and/or time.
+
+`standingevents` represents a collection of standing events, such as a discount partnership that is valid during the hours of operation of a business, or an event that repeats often enough that it would be annoying to manually enter it into the system each time. These standing events will be presented seperately from the scheduled events, unless they are 'promoted', in which case the event will be promoted to the top of the event search results.
+
+
 data : {
 	events : {
 		event_id : {	//event_id is a string assigned by firebase
@@ -18,9 +30,9 @@ data : {
 				zip		: string	// ie: "78759"
 			}
 
-			agerange 	:	string	// one of ["6-10", "11-14", "15-18"]
+			agerange 	:	string	// one of ageranges (see below)
 
-			category 	:	string	// one of ["Educational", "Arts/Music", "Sports", "Outdoors", "Discount Partner", "Other"]
+			category 	:	string	// one of categories (see below)
 
 			datebegin	:	string	// milliseconds since Jan 1, 1970 ie: "1405043349696"; see JS Date object
 
@@ -72,5 +84,10 @@ data : {
 			url 		:	string	// full URL; ie: "http://www.myurl.com"
 		}
 	}
+
+	categories : [string]
+
+	ratings : [int]
+
+	ageranges : [string]
 }
-```
