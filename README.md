@@ -18,12 +18,12 @@ Our data is stored in the firebase as described below. `events` is an object con
 
 `standingevents` represents a collection of standing events, such as a discount partnership that is valid during the hours of operation of a business, or an event that repeats often enough that it would be annoying to manually enter it into the system each time. These standing events will be presented seperately from the scheduled events, unless they are 'promoted', in which case the event will be promoted to the top of the event search results.
 
-
+```
 data : {
 	events : {
 		event_id : {	//event_id is a string assigned by firebase
 			address 	: 	{
-				street1 : string 	// ie: "201 Colorado"
+				street1 : `string` 	// ie: "201 Colorado"
 				street2 : string	// ie: "Apt 5"
 				city 	: string	// ie: "Austin"
 				state	: string	// ie: "TX"
@@ -91,3 +91,4 @@ data : {
 
 	ageranges : [string]
 }
+```
