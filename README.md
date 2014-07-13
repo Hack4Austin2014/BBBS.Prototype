@@ -34,7 +34,7 @@ data : {
 
 			category 	:	[string]	// zero or more of categories (see below)
 
-			datebegin	:	string	// milliseconds since Jan 1, 1970 ie: "1405043349696"; see JS Date object
+			datebegin	:	string	// milliseconds. ie: "1405043349696"; see JS Date object
 
 			description	:	string
 
