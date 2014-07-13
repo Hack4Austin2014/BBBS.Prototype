@@ -273,7 +273,7 @@
     }, function(error){
     	if(error){
     		alert("There was an error saving to the database. For details, check the console.");
-    		console.log(error);
+    		console.log(error.getStack());
     	}
     	else{
     		alert("The event was successfully submitted.");
