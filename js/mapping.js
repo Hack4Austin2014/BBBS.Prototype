@@ -382,7 +382,6 @@ function GetEvents(ids)
 {
 
 console.log('GetEvents');
-console.log($FIREBASE_URL);
   var arrayTest = new Array();
   var fb = new Firebase($FIREBASE_URL + '/data/events');
 
