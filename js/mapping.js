@@ -2,12 +2,14 @@
 var serviceAreaTask, params, clickpoint, ServiceAreaParameters, arrayUtils;
 var addressGraphic; var areaGraphic;
 var eventLayer;
+var gLayer;
 var trafficLayer; 
+var idLookup = {};
 
 require([
   "esri/map", "esri/config", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/SpatialReference", "esri/layers/FeatureLayer", "esri/tasks/locator", "esri/graphic",
   "esri/InfoTemplate", "esri/symbols/SimpleMarkerSymbol",
-  "esri/symbols/Font", "esri/symbols/TextSymbol",
+  "esri/symbols/Font", "esri/symbols/TextSymbol", "esri/layers/GraphicsLayer",
   "dojo/_base/array", "esri/Color",              "esri/tasks/GeometryService",
           "esri/tasks/BufferParameters","esri/tasks/IdentifyTask","esri/tasks/IdentifyParameters",
           "esri/symbols/SimpleFillSymbol","esri/symbols/SimpleLineSymbol",
@@ -20,7 +22,7 @@ require([
 function (
   Map, esriConfig, ArcGISDynamicMapServiceLayer, SpatialReference, FeatureLayer, Locator, Graphic,
   InfoTemplate, SimpleMarkerSymbol,
-  Font, TextSymbol,
+  Font, TextSymbol, GraphicsLayer,
   arrayUtils, Color,GeometryService, BufferParameters,IdentifyTask, IdentifyParameters,
   SimpleFillSymbol,SimpleLineSymbol,number, parser, dom, registry, ServiceAreaTask, ServiceAreaParameters
     ) {
@@ -60,7 +62,10 @@ function (
     locator = new Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
     locator.on("address-to-locations-complete", showResults);
     map.addLayer(eventLayer);
-    
+
+    gLayer = new GraphicsLayer();
+    map.addLayer(gLayer);
+
     
     var identifyTask, identifyParams;
 
@@ -369,7 +374,9 @@ function showResults(result) {
     for (i = 0; i < result.features.length; i++)
     {
         console.log(result.features[i].attributes.ID); 
-        fbID.push(result.features[i].attributes.ID); 
+        fbID.push(result.features[i].attributes.ID);
+        idLookup[result.features[i].attributes.ID] = result.features[i].geometry;
+
     }
     if (fbID.length > 0)
     {
@@ -403,11 +410,12 @@ console.log('GetEvents');
             arrayTest.push(userSnap);
             var info = userSnap.val(); 
             // console.log(userSnap.val());
-			resultHtml = "<img src='images/eventpics/" + info.picture + "' width='60px' height='60px'/>" + "&nbsp;&nbsp;&nbsp;"+info.title +"&nbsp; &nbsp;"+(Math.floor(Math.random() * 5) + 1)+"&nbsp;<i class='fa fa-star'></i>"  +"&nbsp;&nbsp;&nbsp;("+info.datebegin+")"+ "<br/>";
-			detailHtml = "<h6>Description: </h6>"+info.description + "<br><b>Age Range: </b>" +info.agerange+"<br><b>Price Range: </b>"+info.pricerange + "<br><b>Interval: </b>"+info.interval+"<br><b>Category: </b>"+info.category; 
-			$('#accordion').append('<div style="font-size:14px;">' + info.title + '</div><div">'+ info.description  +'</div>'); 
-      console.log(resultHtml); 
-      console.log(detailHtml); 
+            resultHtml = "<img  style='width: 20px; height: 20px' src='images/" + info.category + ".png'  title='" + info.category + "' /><span style='margin-left: 5px;'><a href='#' onclick='pinMap(\"" + userSnap.name() + "\");' class='d'>" + info.title + "</a></span>, <span class='d'>" + info.agerange + "</span>, <span class='d'>" + info.pricerange + "</span>";
+            detailHtml = "<div class='sDetail' id='" + userSnap.name() + "'>" + info.description + "<p>" + info.address.street1 + "<br/>" + info.address.city + "," + info.address.state + " " + info.address.zip + "</p>Website: <a href='" + info.url + "'>" + info.url + "</a><img src='images/eventpics/" + info.picture + "' style='float: left; width: 240px; height: 240px;' /></div>";
+              //$('#accordion').append('<div style="font-size:14px;">' + info.title + '</div><div">'+ info.description  +'</div>'); 
+			$('#accordion').append('<div style="font-size: 12px;">' + resultHtml + '</div><div">' + detailHtml + '</div>');
+//      console.log(resultHtml); 
+//      console.log(detailHtml); 
             ids.splice(i, 1);
           }
         });
@@ -429,4 +437,73 @@ console.log('GetEvents');
     // console.log(arrayTest.length);
   });
 
+}
+
+
+
+function pinMap(id) {
+
+    require([
+      "esri/map", "esri/config", "esri/geometry/Point", "esri/SpatialReference", "esri/layers/FeatureLayer", "esri/tasks/locator", "esri/graphic",
+      "esri/InfoTemplate", "esri/symbols/SimpleMarkerSymbol",
+      "esri/symbols/Font", "esri/symbols/TextSymbol",
+      "dojo/_base/array", "esri/Color", "esri/symbols/PictureMarkerSymbol",
+      "dojo/number", "dojo/parser", "dojo/dom", "dijit/registry",
+      "esri/tasks/ServiceAreaTask", "esri/tasks/ServiceAreaParameters",
+      "dijit/form/Button", "dijit/form/Textarea",
+      "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
+      "dojo/domReady!"
+    ],
+
+
+    function (
+      Map, esriConfig, Point, SpatialReference, FeatureLayer, Locator, Graphic,
+      InfoTemplate, SimpleMarkerSymbol,
+      Font, TextSymbol,
+      arrayUtils, Color, PictureMarkerSymbol,
+      number, parser, dom, registry, ServiceAreaTask, ServiceAreaParameters
+        ) {
+
+        var g = idLookup[id];
+        console.log('pinned:' + id); 
+        var symbol = new SimpleMarkerSymbol();
+        var infoTemplate = new InfoTemplate(
+          "Location",
+          "Address: ${address}<br />Score: ${score}<br />Source locator: ${locatorName}"
+        );
+        symbol.setStyle(SimpleMarkerSymbol.STYLE_SQUARE);
+        symbol.setColor(new Color([153, 0, 51, 0.75]));
+        var pictureMarkerSymbol = new PictureMarkerSymbol('images/marker2.png', 32, 32);
+        pictureMarkerSymbol.yoffset = 15;
+
+        gLayer.clear();
+        var gp = new Graphic(g, pictureMarkerSymbol);
+        //add a graphic to the map at the geocoded location
+
+        gLayer.add(gp);
+        map.centerAndZoom(g, 15);
+
+        //add a text symbol to the map listing the location of the matched address.
+        var displayText = "Your current location";
+        var font = new Font(
+          "16pt",
+          Font.STYLE_NORMAL,
+          Font.VARIANT_NORMAL,
+          Font.WEIGHT_BOLD,
+          "Helvetica"
+        );
+
+        var textSymbol = new TextSymbol(
+          displayText,
+          font,
+          new Color("#666633")
+        );
+        textSymbol.setOffset(0, 8);
+
+        // map.graphics.add(new Graphic(geom, textSymbol)); 
+
+        // CreateDriveTime(); 
+    }
+
+    );
 }

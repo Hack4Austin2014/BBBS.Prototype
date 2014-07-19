@@ -89,4 +89,4 @@ fa{	color:#fff !important;}
     margin-right: auto; 
     width: 300px;
 	text-align: center;
-}
+}/*iphone and android phones*/@media all and (max-width: 768px){	#small-menu {		top: 440px !important;		right: 0px !important;		width: 100% !important; 		}	#small-nav{ 		display: block !important;	}		#events-container{		width:100% !important;		max-width: 100% !important;	}	#menu-toggle{		display: block !important;	}	#map{			height: auto !important;	}}
