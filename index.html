@@ -50,7 +50,7 @@
 
   
 	  h1{color: #7AC142;}
-	  #mainWindow { margin: 0 !important; height: auto;}
+	  #mainWindow { margin: 0 !important; }
       #map{ 
         padding:0px;
         border:solid 1px #343642;
@@ -73,13 +73,11 @@
 
 </head>
 <body class="claro" onload="getLocation()">
-
-	
-
 	<div style ="width: 100%; height: 100%; ">
 	
 	
 	<!-- LOADING SCREEN -->
+	<!-- 
 	<div class="outer" id="splashscreen">
 		<div class="middle">
 			<div class="inner">
@@ -98,12 +96,12 @@
 				<div style="height: 32px; width: 32px; margin: 0 auto;">
 				<i class="fa fa-refresh fa-spin fa-lg fa-2x" style="color:#fff; padding-top: 5px;"></i> 
 				</div>
-				<!-- option 2 <div class="loader"><span></span><span></span><span></span></div> <!--loading dots 
+				option 2 <div class="loader"><span></span><span></span><span></span></div> <!--loading dots 
 					 option 3 <div class="wobblebar" style="width: 100%;"> 	Loading... 	</div>
-				-->
+				
 			</div>
 		</div>
-	</div>
+	</div>-->
 
 	
 
@@ -146,7 +144,7 @@
                 <li><a href="https://github.com/Hack4Austin2014/BBBS.Prototype">Support Us!</a></li>
               </ul>
             </li>
-          </ul>
+          </ul> 	
 
           <ul class="nav navbar-nav navbar-right">
 			<li><a href="#" onclick="getLocation();">Find Me</a></li>
@@ -171,7 +169,7 @@
 
 	<div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" 
 		data-dojo-props="design:'sidebar', gutters:false" 
-		class="body rows scroll-y scroll-x visible-md visible-lg" style="height:100%;width: 100%;">
+		class="body rows scroll-y scroll-x  style="height:100%;width: 100%;">
 		<div id="map" 
 		   data-dojo-type="dijit/layout/ContentPane" 
 		   data-dojo-props="region:'center'" >
@@ -186,7 +184,8 @@
 	<div id="small-menu" style = "position: absolute; right: 10px; top: 100px;" >
 		<div style ="z-index: 10; position: relative; padding: 2px 2px 0px 2px;  ">
           
-		  <nav class="navbar navbar-inverse navbar-embossed " role="navigation" style="display: none;">
+		<!--
+		  <nav id="small-nav" class="navbar navbar-inverse navbar-embossed " role="navigation" style="display: none;">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
                 <span class="sr-only">Toggle navigation</span>
@@ -194,7 +193,9 @@
 			  <a class="navbar-brand" href="#"><img src="images/logo.png" alt="logo" height="35px;" style="margin-top:-10px;"/></a>
             </div>
 		  </nav>
-		<!--
+		  
+		  
+		  
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
               <ul class="nav navbar-nav navbar-left" style="overflow: hidden;">           
                 <li><a href="pages/admin.html">Admin</a></li>
@@ -220,7 +221,7 @@
 		
 
 	
-	  <div style="background: transparent; max-height:400px; width:100%; padding:2px; height: auto; width:350px; ">
+	  <div id="events-container" style="background: transparent; max-height:400px;  padding:2px; height: auto; width:350px; ">
 		<div  style="width:100%; ">
 			<div class="col-xs-12 app-title" style =" z-index: 1; position: relative; bgcolor: #008000;">
 				Events for Kids
@@ -274,7 +275,7 @@
 		var acc; 	
 		function getLocation()
 		{
-			jQuery('#large-menu').addClass('visible-md visible-lg showMenu');
+			//jQuery('#large-menu').addClass('visible-md visible-lg showMenu');
 			if (navigator.geolocation)
 			{
 				navigator.geolocation.getCurrentPosition(showPosition);
