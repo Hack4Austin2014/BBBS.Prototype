@@ -4,6 +4,12 @@ BBBS.Prototype
 Functional prototype of the BBBS Events app for demonstration purposes
 
 
+
+
+##Demo
+[Live Demo](http://hack4austin2014.github.io/BBBS.Prototype/)
+
+
 ##API Spec:
 
 Firebase RESTful API URL: `https://[firebase].firebaseIO.com/[path/to/json/object].json`
