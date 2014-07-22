@@ -1,11 +1,20 @@
 BBBS.Prototype
 ==============
-
 Functional prototype of the BBBS Events app for demonstration purposes
 
+---
+#### Contents
+* [Demo](#demo)
+* [API Spec]()
+* [Installation]()
+* [Road Map]()
+* [Acknowledgements](#credits)
+
+---
 
 
 
+<a name="#demo">
 ##Demo
 [Live Demo](http://hack4austin2014.github.io/BBBS.Prototype/)
 
@@ -110,6 +119,7 @@ We plan on finishing the prototype such that it will be all static HTML, JavaScr
 
 We have on the horizon the vision to make a sequel server version, so you can host it all locally on a server you have access to. Also, this was born at a hackathon, so we didn't get a chance to use any JS frameworks; however, future versions may be rewritten in AngularJS and possibly use Google Maps API or the new firebase [Geofire](https://github.com/firebase/geofire/).
 
+<a name="#credits">
 ##Acknowledgements
 
 Read about our hackathon on the Big Brothers Big Sisters of Central Texas [blog](http://bigmentoring.wordpress.com/2014/06/04/bbbs-hack4austin/). 
