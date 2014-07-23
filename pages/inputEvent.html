@@ -3,273 +3,112 @@
 <div class="container">
 
 	<div style="text-align:right;"><button onclick="logout()" style="color:red;">Log out</button></div>
-
 	<form action="" id="inputEventForm">
-
-		<label>
-
-			Event Title	
-
-		</label>
-
-		<input type="text" id="title">
-
-		<br/>
-
-		<br/>
-
-
-
-		<label>
-
-			Address:
-
-		</label>
-
-
-
-		<div id="address" style="padding-left: 30px;">
-
-		  <label>Street1</label>
-
-		  <input type="text" id="street1">
-
-		  <br/>
-
-		  
-
-		  <label>Street2</label>
-
-		  <input type="text" id="street2">
-
-		  <br/>
-
-		  
-
-		  <label>City</label>
-
-		  <input type="text" id="city">
-
-		  <br/>
-
-		  
-
-		  <label>State</label>
-
-		  <input type="text" id="state">
-
-		  <br/>
-
-		  
-
-		  <label>Zip</label>
-
-		  <input type="text" id="zip">
-
-		  <br/>
-
-		  
-
-		</div>
-
-		<br/>
-
-		<br/>
-
-		
-
-		<label>
-
-			Age Range
-
-		</label>
-
-		<select id="agerange">
-
-		  <option>6 to 10</option>
-
-		  <option>11-14</option>
-
-		  <option>15-19</option>
-
-		</select>
-
-		<br/>
-
-		<br/>
-
-		<label>
-
-		Category
-
-		</label>
-
-
-
-		<select id="category">
-
-		  <option>Educational</option>
-
-		  <option>Physical</option>
-
-		  <option>Social</option>
-
-		</select>
-
-		<br/>
-
-		<br/>
-
-
-
-		<label>
-
-		Date Begin
-
-		</label>
-
-		<input type="date" id="datebegin">
-
-		<br/>
-
-		<br/>
-
-
-
-
-
-		<label>
-
-		Description
-
-		</label>
-
-		<textarea id="description"></textarea>
-
-		<br/>
-
-		<br/>
-
-		<label>
-
-		Interval (Days)
-
-		</label>
-
-		<input type="text" id="interval">
-
-		<br/>
-
-		<br/>
-
-
-
-		<label>
-
-		Open Time
-
-		</label>
-
-		<input type="text" id="opentime">
-
-		<br/>
-
-		<br/>
-
-
-
-
-
-		<label>
-
-		Picture URL
-
-		</label>
-
-		<input type="url" id="picture">
-
-		<br/>
-
-		<br/>
-
-		<label>
-
-		Highest Cost
-
-		</label>
-
-		$<input type="number" value="0" id="pricerange">
-
-		<br/>
-
-		<br/>
-
-		<label>
-
-		Rating
-
-		</label>
-
-		<input type="number" min="1" max="5" value="5" id="rating">
-
-		<br/>
-
-		<br/>
-
-		<label>
-
-		Tag
-
-		</label>
-
-		<input type="text" id="tag">
-
-		<br/>
-
-		<br/>
-
-		<label>
-
-		Url
-
-		</label>
-
-		<input type="url" id="url">
-
-		<br/>
-
+		<table>
+			<tr>
+				<td style="padding: 5px;">Event Title:</td>
+				<td><input type="text" id="title"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Address:</td>
+			</tr>
+			<tr>
+			  	<td style="padding: 5px; padding-left: 30px;">Street 1:</td>
+			  	<td><input type="text" id="street1"></td>
+			</tr>
+			  <tr>
+			  	<td style="padding: 5px; padding-left: 30px;">Street 2:</td>
+			  	<td><input type="text" id="street2"></td>
+			  </tr>
+			  <tr>
+			  	<td style="padding: 5px; padding-left: 30px;">City:</td>
+			  	<td><input type="text" id="city"></td>
+			  </tr>
+			  <tr>
+			  	<td style="padding: 5px; padding-left: 30px;">State:</td>
+			  	<td><input type="text" id="state"></td>
+			  </tr>
+			  <tr>
+			  	<td style="padding: 5px; padding-left: 30px;">Zip:</td>
+			  	<td><input type="text" id="zip"></td>
+			  </tr>
+			  
+			<tr>
+				<td style="padding: 5px;">Age Range:</td>
+				<td style="padding: 5px;">
+					<select id="agerange">
+					  <option>6 to 10</option>
+					  <option>11-14</option>
+					  <option>15-19</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Category:</td>
+				<td style="padding: 5px;">
+					<select id="category">
+					  <option>Educational</option>
+					  <option>Physical</option>
+					  <option>Social</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Date Begin:</td>
+				<td style="padding: 5px;"><input type="date" id="datebegin"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;  vertical-align: top;">Description:</td>
+				<td style="padding: 5px;"><textarea id="description"></textarea></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Interval (Days):</td>
+				<td style="padding: 5px;"><input type="text" id="interval"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Open Time:</td>
+				<td style="padding: 5px;"><input type="text" id="opentime"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Picture URL:</td>
+				<td style="padding: 5px;"><input type="url" id="picture"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Highest Cost ($):</td>
+				<td style="padding: 5px;"><input type="number" value="0" id="pricerange"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Rating:</td>
+				<td style="padding: 5px;"><input type="number" min="1" max="5" value="5" id="rating"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Tag:</td>
+				<td style="padding: 5px;"><input type="text" id="tag"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px;">Url (include "http://" ):</td>
+				<td style="padding: 5px;"><input type="url" id="url"></td>
+			</tr>
+		</table>
+		<br />
 		<input type="submit">
-
+		<br>
+		<br>
+		<br>
 	</form>
-
-
-
 <script>
-
   jQuery("#inputEventForm").submit(function(){
-
     var arrayTest = new Array();
-
     var fb2 = new Firebase($FIREBASE_URL + '/data/events');
 
-
-
     fb2.push({address : {street1: $("#street1").val(), street2: $("#street2").val(),
-
       city: $("#city").val(), state: $("#state").val(), zip: $("#zip").val()},
-
       agerange: $("#agerange").val(),
-
       category: $("#category").val(), datebegin: $("#datebegin").val(),
-
       description: $("#description").val(), interval: $("#interval").val(),
-
       opentime: $("#opentime").val(), picture: $("#picture").val(),
-
       pricerange: $("#pricerange").val(), rating: $("#rating").val(),
-
       tag: $("#tag").val(), title: $("#title").val(), url: $("#url").val()
-
     }, function(error){
     	if(error){
     		alert("There was an error saving to the database. For details, check the console.");
@@ -283,12 +122,5 @@
     return false;
 
   });
-
-
-
-
-
 </script>
-
 </div>
-

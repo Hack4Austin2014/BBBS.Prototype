@@ -1,9 +1,24 @@
 BBBS.Prototype
 ==============
-
 Functional prototype of the BBBS Events app for demonstration purposes
 
+---
+#### Contents
+* [Demo](#demo)
+* [API Spec](#api)
+* [Installation](#installation)
+* [Road Map](#road)
+* [Acknowledgements](#credits)
 
+---
+
+
+
+<a name="demo">
+##Demo
+[Live Demo](http://hack4austin2014.github.io/BBBS.Prototype/)
+
+<a name="api">
 ##API Spec:
 
 Firebase RESTful API URL: `https://[firebase].firebaseIO.com/[path/to/json/object].json`
@@ -95,15 +110,17 @@ data : {
 }
 ```
 
-
+<a name="isntallation">
 ##Installation
 **Note**: This is still in development; once we have a functional prototype, we will move all development to a `dev` branch and leave the `master` branch as the current release. Stay tuned for details on configuring your firebase, defining your firebase URL in the javascript, and any installation/hosting details.
 
+<a name ="road">
 ##Road Map
 We plan on finishing the prototype such that it will be all static HTML, JavaScript, and CSS files and can be hosted on any static web page server. This, coupled with your [firebase plan](https://www.firebase.com/pricing.html) of choice, should remove the need for any server-side coding. Depending on your database connection needs, you might get by with the free firebase hacker plan. Otherwise, you simply pay for your connection needs. 
 
 We have on the horizon the vision to make a sequel server version, so you can host it all locally on a server you have access to. Also, this was born at a hackathon, so we didn't get a chance to use any JS frameworks; however, future versions may be rewritten in AngularJS and possibly use Google Maps API or the new firebase [Geofire](https://github.com/firebase/geofire/).
 
+<a name="credits">
 ##Acknowledgements
 
 Read about our hackathon on the Big Brothers Big Sisters of Central Texas [blog](http://bigmentoring.wordpress.com/2014/06/04/bbbs-hack4austin/). 
