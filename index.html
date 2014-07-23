@@ -237,6 +237,11 @@
 				
 			
 			</div>
+			<div id="accordionPaginator">
+				<a href="#" class="previousPage">Previous Page</a>
+
+				<a href="#" class="nextPage">Next Page</a>
+			</div>
 		</div> <!-- row -->
 	  </div>	
 	</div> <!-- small visibility container-->
@@ -252,6 +257,7 @@
 	<script src="js/config.js"></script>
 	<script src="js/mapping.js"></script>
 	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="js/pagination.js"></script>
 
 	<!-- 
     <script src="js/flatui-checkbox.js"></script>
@@ -263,6 +269,40 @@
 
 
 	<script>
+		
+	var paginatorHandle = null;	
+
+	jQuery(document).ready(function() {
+		jQuery("#accordion").accordion({
+			autoHeight: false
+		});
+
+		paginatorHandle = jQuery("#dalist").paginateAccordion({
+				"currentPage": 0, 
+				"itemsPerPage": 7,
+				"paginatorControl": jQuery("#accordionPaginator")
+			});	
+		
+		// initial paginate call
+		paginatorHandle.paginate();
+		
+		jQuery("#accordionPaginator .nextPage").click(function() {
+			paginatorHandle.nextPage();
+		});
+		
+		jQuery("#accordionPaginator .previousPage").click(function() {
+			paginatorHandle.previousPage();
+		});
+		
+		jQuery("#accordionPaginator .goToPage").change(function() {
+			var pageIndex = parseInt($(this).val());
+			paginatorHandle.goToPage(pageIndex);
+		});
+	});
+	
+	
+	
+	
 		$("#menu-toggle").click(function(){
 			$("#small-menu").css("top","80px");
 		
