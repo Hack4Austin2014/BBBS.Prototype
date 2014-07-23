@@ -35,13 +35,7 @@ Every event has a beginning date and/or time (`datebegin`). A standing event tha
 data : {
 	events : {
 		event_id : {	//event_id is a string assigned by firebase
-			address 	: 	{
-				street1 : string 	// ie: "201 Colorado"
-				street2 : string	// ie: "Apt 5"
-				city 	: string	// ie: "Austin"
-				state	: string	// ie: "TX"
-				zip		: string	// ie: "78759"
-			}
+			address 	:	string	// will be parsed by mapping API
 
 			agerange 	:	string	// one of ageranges (see below)
 
@@ -53,7 +47,7 @@ data : {
 
 			picture		:	string	// full URL of the picture to include
 
-			pricerange	:	int		// one of priceranges (see below)
+			pricerange	:	string		// one of priceranges (see below)
 
 			promoted	:	boolean
 
@@ -73,7 +67,7 @@ data : {
 
 	ageranges : [string]
 
-	priceranges : [int]
+	priceranges : [string] 	//ie: [$, $$, $$$, $$$$, $$$$$]
 }
 ```
 
