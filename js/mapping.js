@@ -420,6 +420,29 @@ console.log('GetEvents');
           }
         });
 		$(  '#accordion' ).accordion( "refresh" ); 
+		var paginatorHandle = null;	
+    	paginatorHandle = jQuery("#accordion").paginateAccordion({
+			"currentPage": 0, 
+			"itemsPerPage": 3,
+			"paginatorControl": jQuery("#accordionPaginator")
+			});	
+	
+			// initial paginate call
+			paginatorHandle.paginate();
+			
+			jQuery("#accordionPaginator .nextPage").click(function() {
+				paginatorHandle.nextPage();
+			});
+			
+			jQuery("#accordionPaginator .previousPage").click(function() {
+				paginatorHandle.previousPage();
+			});
+			
+			jQuery("#accordionPaginator .goToPage").change(function() {
+				var pageIndex = parseInt($(this).val());
+				paginatorHandle.goToPage(pageIndex);
+			});
+		
 		redirect();
       }
 	  
