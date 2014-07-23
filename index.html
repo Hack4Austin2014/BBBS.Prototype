@@ -67,6 +67,15 @@
     .scroll-x { overflow-x: hidden !important; }
     .scroll-y { overflow-y: auto; }
 
+
+	    .searchbtn
+	    {
+            background-image: url(images/search.png);
+            height: 34px; 
+            width: 34px; 
+            padding: 0; 
+            border: none; 
+	    }
 	</style>
 
 	
@@ -154,9 +163,16 @@
 			        <div class="input-group">
 			          <input class="form-control"  id="address" type="search" placeholder="Search Address">
 			          <span class="input-group-btn"> 					  
-			            <button id="locate"  type="button"  class="searchbtn" onclick="locate();" > Hey!</button>
-			          </span>            
+			            <button id="locate"  type="button"  class="searchbtn" onclick="locate();"  ></button>
+			          </span>     
 			        </div>
+                    <div style="float: right; color: #fff">Search within: <select id="TimeInput" style="width: 100px; margin-left: 5px; padding-bottom: 0px; border: none; font-size: 16px; color: #fff; background-color: #8E44AD;">
+                          <option value="5" selected>5 mins.</option>
+                          <option value="10">10 mins.</option>
+                          <option value="15">15 mins.</option>
+                          <option value="20">20 mins.</option>
+                       </select>       
+                    </div>
 			      </div>               
 			    </form>
 			</li>
@@ -227,7 +243,7 @@
 				Events for Kids
 			</div>		
 
-			<div id="loading" style=" margin: 0 auto; text-align: center; background: #EFF0F2; margin-top: 0px; border-radius: 20px; padding-bottom: 10px;"> 
+			<div id="loading" style=" margin: 0 auto; text-align: center; z-index: 12; background: #EFF0F2; margin-top: 0px; border-radius: 20px; padding-bottom: 10px;"> 
 				Looking for Events<br>
 				Please Wait<br>
 				<i class="fa fa-refresh fa-spin fa-lg fa-2x" style="color:#fff; padding-top: 5px; "></i> 
@@ -318,19 +334,35 @@
 			
 		});
 
+
+		$("#TimeInput").change(function () {
+		    console.log('Changed'); 
+		    var addr = $('#address').val();
+
+		    if (addr.length > 0) {
+		        locate(); 
+		    }
+		    else {
+		        getLocation();
+		    }
+		});
+
+
 		var acc; 	
 		function getLocation()
 		{
 			//jQuery('#large-menu').addClass('visible-md visible-lg showMenu');
 			if (navigator.geolocation)
 			{
-				navigator.geolocation.getCurrentPosition(showPosition);
+			    navigator.geolocation.getCurrentPosition(showPosition);
+			    $('#address').val('');
 				//window.setTimeout("redirect()",2000);
 			}
 			else{x.innerHTML="Geolocation is not supported by this browser.";}
 		}  
 		
-		function showPosition(position){
+		function showPosition(position) {
+
 			ZoomLocation(position.coords.longitude, position.coords.latitude); 
 		}
 		

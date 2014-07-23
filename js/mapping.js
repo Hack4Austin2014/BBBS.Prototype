@@ -137,7 +137,8 @@ function showBuffer(bufferedGeometries) {
         
 
 function locate() {
-     map.graphics.clear();
+    map.graphics.clear();
+    gLayer.clear(); 
       var address = {
           "SingleLine": $('#address').val()
       };
@@ -239,6 +240,7 @@ function (
   arrayUtils, Color,
   number, parser, dom, registry, ServiceAreaTask, ServiceAreaParameters
     ) {
+    map.graphics.clear(); 
         var symbol = new SimpleMarkerSymbol();
         var infoTemplate = new InfoTemplate(
           "Location",
@@ -270,7 +272,12 @@ addressGraphic = new Graphic(geom, symbol);
 
                 map.graphics.add(new Graphic(geom, textSymbol)); 
 
-            map.centerAndZoom(geom, 12);     
+                var dtInput = $('#TimeInput').val();
+                if (dtInput == undefined || dtInput.length == 0) {
+                    dtInput = 5;
+                }
+                
+                map.centerAndZoom(geom, 14 - ~~(dtInput / 5));    
             CreateDriveTime(); 
     }
     
@@ -304,7 +311,12 @@ function CreateDriveTime() {
         esriConfig.defaults.io.proxyUrl = "/proxy";
 
         params = new ServiceAreaParameters();
-        params.defaultBreaks = [5];
+
+        var dtInput = $('#TimeInput').val();
+        if (dtInput == undefined || dtInput.length == 0) {
+            dtInput = 5; 
+        }
+        params.defaultBreaks = [dtInput];
         params.outSpatialReference = new SpatialReference(102100);
         params.returnFacilities = false;
 
@@ -337,6 +349,7 @@ function CreateDriveTime() {
                 serviceArea.setSymbol(polygonSymbol);
                 map.graphics.add(serviceArea);
                 areaGraphic = serviceArea;
+               // map.centerAndZoom(serviceArea, 12); 
                 QueryAddress();
             });
 
@@ -391,6 +404,7 @@ function GetEvents(ids)
 console.log('GetEvents');
   var arrayTest = new Array();
   var fb = new Firebase($FIREBASE_URL + '/data/events');
+  $('#accordion').empty();
 
   //$('#InfoDiv').empty(); 
   fb.once('value', function(snapshot) {
@@ -436,6 +450,8 @@ console.log('GetEvents');
     // console.log(arrayTest[0]);
     // console.log(arrayTest.length);
   });
+
+
 
 }
 
@@ -507,3 +523,5 @@ function pinMap(id) {
 
     );
 }
+
+
