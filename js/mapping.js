@@ -413,35 +413,14 @@ console.log('GetEvents');
             resultHtml = "<img  style='width: 20px; height: 20px' src='images/" + info.category + ".png'  title='" + info.category + "' /><span style='margin-left: 5px;'><a href='#' onclick='pinMap(\"" + userSnap.name() + "\");' class='d'>" + info.title + "</a></span>, <span class='d'>" + info.agerange + "</span>, <span class='d'>" + info.pricerange + "</span>";
             detailHtml = "<div class='sDetail' id='" + userSnap.name() + "'>" + info.description + "<p>" + info.address.street1 + "<br/>" + info.address.city + "," + info.address.state + " " + info.address.zip + "</p>Website: <a href='" + info.url + "'>" + info.url + "</a><img src='images/eventpics/" + info.picture + "' style='float: left; width: 240px; height: 240px;' /></div>";
               //$('#accordion').append('<div style="font-size:14px;">' + info.title + '</div><div">'+ info.description  +'</div>'); 
-			$('#accordion').append('<span style="font-size: 12px;">' + resultHtml + '</span><div">' + detailHtml + '</div>');
+			$('#accordion').append('<div style="font-size: 12px;">' + resultHtml + '</div><div">' + detailHtml + '</div>');
 //      console.log(resultHtml); 
 //      console.log(detailHtml); 
             ids.splice(i, 1);
           }
         });
 		$(  '#accordion' ).accordion( "refresh" ); 
-		var paginatorHandle = null;	
-    	paginatorHandle = jQuery("#accordion").paginateAccordion({
-			"currentPage": 0, 
-			"itemsPerPage": 7,
-			"paginatorControl": jQuery("#accordionPaginator")
-			});	
-	
-			// initial paginate call
-			paginatorHandle.paginate();
-			
-			jQuery("#accordionPaginator .nextPage").click(function() {
-				paginatorHandle.nextPage();
-			});
-			
-			jQuery("#accordionPaginator .previousPage").click(function() {
-				paginatorHandle.previousPage();
-			});
-			
-			jQuery("#accordionPaginator .goToPage").change(function() {
-				var pageIndex = parseInt($(this).val());
-				paginatorHandle.goToPage(pageIndex);
-			});
+		
 		
 		redirect();
       }

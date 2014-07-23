@@ -278,7 +278,7 @@
 			$("#small-menu").css("top","80px");
 		
 		});
-	
+		var paginatorHandle = null;	
 	    // create accordion
 		$(function() {
 			$( '#accordion' ).accordion(
@@ -288,6 +288,27 @@
 			);
 			
 		
+			paginatorHandle = jQuery("#accordion").paginateAccordion({
+			"currentPage": 0, 
+			"itemsPerPage": 7,
+			"paginatorControl": jQuery("#accordionPaginator")
+			});	
+	
+			// initial paginate call
+			paginatorHandle.paginate();
+			
+			jQuery("#accordionPaginator .nextPage").click(function() {
+				paginatorHandle.nextPage();
+			});
+			
+			jQuery("#accordionPaginator .previousPage").click(function() {
+				paginatorHandle.previousPage();
+			});
+			
+			jQuery("#accordionPaginator .goToPage").change(function() {
+				var pageIndex = parseInt($(this).val());
+				paginatorHandle.goToPage(pageIndex);
+			});
 			
 		});
 
