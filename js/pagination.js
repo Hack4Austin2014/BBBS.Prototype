@@ -14,17 +14,17 @@ function AccordionPaginator(element, currentPage, itemsPerPage, paginatorControl
 		element.children().hide();
 
 		if(index < 0) {
-			this.element.children("div:first").show();
-			this.element.children("h3:first").show();	
+			this.element.children("span:first").show();
+			this.element.children("div:first").show();	
 		}
 		else {
 		
 			this.element
-				.children("div:eq(" + index + ")")
+				.children("span:eq(" + index + ")")
 				.show();
 				
 			this.element
-				.children("h3:eq(" + index + "),h3:gt(" + index + ")")
+				.children("div:eq(" + index + "),div:gt(" + index + ")")
 				.filter(":lt(" + this.itemsPerPage + ")")
 				.show();
 		}
