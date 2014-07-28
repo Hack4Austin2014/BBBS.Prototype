@@ -1,7 +1,7 @@
 <?php
 /*
 google_calendar.php
-Monday July 14, 2014 7:47pm
+Monday July 14, 2014 7:47pm Stefan S.
 
 Google Calendar integration utilities for BBBS Events app
 
@@ -10,10 +10,17 @@ NOTES:
 
 */
 
+/* ---------- includes */
+
+require_once "universal/universal.php";
+
+require_once "event_source.php";
+require_once "bbbs_event.php";
+
 /* ---------- classes */
 
 // Google Calendar
-class google_calendar
+class c_google_calendar extends c_event_source
 {
 	/* ---------- constants */
 	
@@ -23,19 +30,103 @@ class google_calendar
 	//currently using Stefan's personal API key
 	const k_google_calendar_api_key= 'AIzaSyCFmZJ-R0o4IyhXVzY3A6EerjzfH4Kprfo';
 	
+	const k_google_calendar_query_time_start= 'timeMin';
+	const k_google_calendar_query_time_end= 'timeMax';
+	
+	const k_key_location= 'location'; // string
+	const k_key_start_time= 'start'; // string
+	const k_key_start_date_time= 'dateTime'; // DateTime
+	const k_key_time_zone= 'timeZone';
+	const k_key_description= 'description'; // string
+	const k_key_title= 'summary'; // string
+	const k_key_url= 'htmlLink'; // string
+	
 	/* ---------- members */
 	
-	/* ---------- methods */
+	private $m_calendar_id= "";
 	
-	// returns an array of BBBS events pulled from the input Google calendar (or NULL on failure)
+	/* ---------- c_event_source methods */
+	
+	// get_events()
+	// $start_date_time: optional input start date / time, or NULL
+	// $end_date_time: optional inout end date / time, or NULL
+	// returns: array of bbbs_event objects, or NULL
+	public function get_events($start_date_time, $end_date_time)
+	{
+		$bbbs_events_array= NULL;
+		
+		$google_events_list_json= $this->events_list_json($this->m_calendar_id, $start_date_time, $end_date_time);
+		//debug::log($google_events_list_json);
+		
+		if (NULL!=$google_events_list_json)
+		{
+			$google_events_array= $this->parse_google_calendar_events_list_json($google_events_list_json);
+			if (NULL!=$google_events_array)
+			{
+				$bbbs_events_array= $this->google_calendar_events_to_bbbs_events($google_events_array);
+				if (NULL!=$bbbs_events_array)
+				{
+					$google_events_count= count($google_events_array);
+					$bbbs_events_count= count($bbbs_events_array);
+					debug::log("Converted " . $bbbs_events_count . " of " . $google_events_count . " Google calendar events into BBBS events");
+				}
+				else
+				{
+					debug::warning("failed to convert Google calendar events to BBBS events");
+				}
+			}
+			else
+			{
+				debug::warning("failed to parse Google events list JSON");
+			}
+		}
+		else
+		{
+			debug::warning("failed to retrieve google calendar events for " . $bbbs_calendar_id);
+		}
+		
+		return $bbbs_events_array;
+	}
+	
+	/* ---------- public methods */
+	
+	// constructor
+	function __construct($calendar_id)
+	{
+		$this->m_calendar_id= $calendar_id;
+		
+		return;
+	}
+	
+	/* ---------- private methods */
 	
 	// returns calendar events query results in JSON format (or NULL on failure)
 	// for the input Google Calendar ID
 	// ref: https://developers.google.com/google-apps/calendar/v3/reference/events/list
-	public function events_list_json($calendar_id)
+	private function events_list_json($calendar_id, $start_time, $end_time)
 	{
 		$body_result= NULL;
-		$data= array('key' => self::k_google_calendar_api_key);
+		$date_time_zone= new DateTimeZone("UTC");
+		if (!isset($start_time))
+		{
+			$start_time= "now";
+			//$end_time= "+1 day"; // look ahead to tomorrow
+			$end_time= "+1 week"; // look ahead 1 week
+		}
+		else if (!isset($end_time))
+		{
+			//$end_time= "+1 day"; // look ahead to tomorrow
+			$end_time= "+1 week"; // look ahead 1 week
+		}
+		
+		$start_date_time= new DateTime($start_time, $date_time_zone);
+		$end_date_time= new DateTime($end_time, $date_time_zone);
+		
+		$data= array(
+			'key' => self::k_google_calendar_api_key,
+			self::k_google_calendar_query_time_start => $start_date_time->format(DateTime::RFC3339),
+			self::k_google_calendar_query_time_end => $end_date_time->format(DateTime::RFC3339)
+			);
 		$query= http_build_query($data);
 		$url= self::k_google_calendar_uri . urlencode($calendar_id) . '/events?' . $query;
 		$response= http_get($url, NULL, $info);
@@ -50,7 +141,7 @@ class google_calendar
 	
 	// parse a Google calendar events list JSON blob into a php associative array
 	// returns an associative array representation of the Google events list, or an empty array on failure
-	public function parse_google_calendar_events_list_json($google_events_list_json)
+	private function parse_google_calendar_events_list_json($google_events_list_json)
 	{
 		$result= array();
 		$json_object= json_decode($google_events_list_json, true);
@@ -65,63 +156,17 @@ class google_calendar
 	
 	// takes a *decoded* $google_event JSON object as input (ie, the $google_event is itself already an associative array)
 	// returns an associative array representation of the BBBS event
-	public function google_event_to_bbbs_event($google_event)
+	private function google_event_to_bbbs_event($google_event)
 	{
-		/*
-		BBBS event JSON:
+		$bbbs_event= new c_bbbs_event();
 		
-		event
-		{
-			event_id: string, // firebase id
-			address
-			{
-				street1: string,
-				street2: string,
-				city: string,
-				state: string,
-				zip: string,
-			},
-			agerange: string,
-			category: string[],
-			datebegin: string, // milliseconds
-			description: string,
-			picture: string, // url
-			pricerange: int,
-			promoted: boolean,
-			rating: int,
-			title: string,
-			url: string, // event url
-		}
+		$bbbs_event->initialize_from_google_calendar_event($google_event);
 		
-		Google Event representation is documented here:
-		https://developers.google.com/google-apps/calendar/v3/reference/events
-		*/
-		
-		$bbbs_event= array();
-		
-		$bbbs_event['event_id']= NULL;
-		$bbbs_event['address']= array();
-		$bbbs_event['address']['street1']= $google_event['location'];
-		$bbbs_event['address']['street2']= '';
-		$bbbs_event['address']['city']= '';
-		$bbbs_event['address']['state']= '';
-		$bbbs_event['address']['zip']= '';
-		$bbbs_event['agerange']= '';
-		$bbbs_event['category']= '';
-		$bbbs_event['datebegin']= strtotime($google_event['start']['dateTime']) * 1000;
-		$bbbs_event['description']= $google_event['description'];
-		$bbbs_event['picture']= '';
-		$bbbs_event['pricerange']= '';
-		$bbbs_event['promoted']= FALSE;
-		$bbbs_event['rating']= 0;
-		$bbbs_event['title']= $google_event['summary'];
-		$bbbs_event['url']= $google_event['htmlLink'];
-		
-		return $bbbs_event;
+		return $bbbs_event->get_event_data();
 	}
 	
 	// convert an array of Google calendar events to an array of BBBS events
-	public function google_calendar_events_to_bbbs_events($google_events_array)
+	private function google_calendar_events_to_bbbs_events($google_events_array)
 	{
 		$bbbs_events= array();
 		
@@ -145,40 +190,22 @@ class google_calendar
 
 // test code
 
-//echo(phpinfo());
-$bbbs_calendar_id= 'bbbsctxcalendar@gmail.com';
-$gcal= new google_calendar();
-$google_events_list_json= $gcal->events_list_json($bbbs_calendar_id);
-//echo($google_events_list_json);
-if (NULL!=$google_events_list_json)
+Header('Content-type: application/json');
+echo("{\"results\":");
+
+$bbbs_calendar_id= 'n01082cnj5ujivj2t6v98if3ek@group.calendar.google.com'; //<-- cloned from 'bbbsctxcalendar@gmail.com';
+$gcal= new c_google_calendar($bbbs_calendar_id);
+$bbbs_events= $gcal->get_events(NULL, NULL);
+
+if (isset($bbbs_events))
 {
-	$google_events_array= $gcal->parse_google_calendar_events_list_json($google_events_list_json);
-	if (NULL!=$google_events_array)
-	{
-		$bbbs_events_array= $gcal->google_calendar_events_to_bbbs_events($google_events_array);
-		if (NULL!=$bbbs_events_array)
-		{
-			$google_events_count= count($google_events_array);
-			$bbbs_events_count= count($bbbs_events_array);
-			echo("Converted " . $bbbs_events_count . " of " . $google_events_count . " Google calendar events into BBBS events<br/><br/>");
-			foreach ($bbbs_events_array as $bbbs_event)
-			{
-				echo("<p>" . print_r($bbbs_event, true) . "<br/></p>");
-			}
-		}
-		else
-		{
-			echo("failed to convert Google calendar events to BBBS events");
-		}
-	}
-	else
-	{
-		echo("failed to parse Google events list JSON");
-	}
+	echo(json_encode($bbbs_events));
 }
 else
 {
-	echo("failed to retrieve google calendar events for " . $bbbs_calendar_id);
+	debug::error("failed to get calendar events!");
 }
+
+echo("}");
 
 ?>
