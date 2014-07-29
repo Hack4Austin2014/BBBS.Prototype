@@ -73,6 +73,7 @@ class c_bbbs_event
 	const k_gcal_desc_key_age= "[age:";
 	const k_gcal_desc_key_cost= "[cost:";
 	const k_gcal_desc_key_category= "[category:";
+	const k_gcal_desc_key_url= "http";
 	
 	/* ---------- members */
 	
@@ -132,16 +133,6 @@ class c_bbbs_event
 				$google_calendar_event[c_google_calendar::k_key_start_time][c_google_calendar::k_key_start_date_time],
 				$time_zone);
 		}
-		if (isset($google_calendar_event[c_google_calendar::k_key_description]))
-		{
-			$this->m_data[self::k_key_description]= $google_calendar_event[c_google_calendar::k_key_description];
-			if (PARSE_GCAL_EVENT_DESCRIPTION)
-			{
-				// attempt to extract additional event details from the provided event description field
-				$this->parse_google_calendar_event_description_field_parameters(
-					strtolower($google_calendar_event[c_google_calendar::k_key_description]));
-			}
-		}
 		if (isset($google_calendar_event[c_google_calendar::k_key_title]))
 		{
 			$this->m_data[self::k_key_title]= $google_calendar_event[c_google_calendar::k_key_title];
@@ -151,22 +142,34 @@ class c_bbbs_event
 			$this->m_data[self::k_key_url]= $google_calendar_event[c_google_calendar::k_key_url];
 		}
 		
+		// handle description last, since parsing this field may (re)set other event parameters
+		if (isset($google_calendar_event[c_google_calendar::k_key_description]))
+		{
+			$this->m_data[self::k_key_description]= $google_calendar_event[c_google_calendar::k_key_description];
+			if (PARSE_GCAL_EVENT_DESCRIPTION)
+			{
+				// attempt to extract additional event details from the provided event description field
+				$this->parse_google_calendar_event_description_field_parameters($google_calendar_event[c_google_calendar::k_key_description]);
+			}
+		}
+		
 		return;
 	}
 	
 	// attempts to extract additional event details from the provided text
 	private function parse_google_calendar_event_description_field_parameters($parse_text)
 	{
-		$age_text= strstr($parse_text, self::k_gcal_desc_key_age);
-		$cost_text= strstr($parse_text, self::k_gcal_desc_key_cost);
-		$category_text= strstr($parse_text, self::k_gcal_desc_key_category);
+		$age_text_offset= stripos($parse_text, self::k_gcal_desc_key_age);
+		$cost_text_offset= stripos($parse_text, self::k_gcal_desc_key_cost);
+		$category_text_offset= stripos($parse_text, self::k_gcal_desc_key_category);
+		$url_text_offset= stripos($parse_text, self::k_gcal_desc_key_url);
 		
-		if (!empty($age_text))
+		if (FALSE !== $age_text_offset)
 		{
 			// examples:
 			// [age:9+]
 			// [age:9-99]
-			$age_text= substr($age_text, strlen(self::k_gcal_desc_key_age));
+			$age_text= substr($parse_text, $age_text_offset + strlen(self::k_gcal_desc_key_age));
 			$tokens= "+-]";
 			$age_start= strtok($age_text, $tokens);
 			$age_end= 99;
@@ -185,13 +188,13 @@ class c_bbbs_event
 			$this->m_data[self::k_key_age_range]= $age_start . "-" . $age_end;
 		}
 		
-		if (!empty($cost_text))
+		if (FALSE !== $cost_text_offset)
 		{
 			// examples:
 			// [cost:]
 			// [cost:$]
 			// [cost:$$]
-			$cost_text= substr($cost_text, strlen(self::k_gcal_desc_key_cost));
+			$cost_text= substr($parse_text, $cost_text_offset + strlen(self::k_gcal_desc_key_cost));
 			$tokens= "]";
 			$cost_tokens= strtok($cost_text, $tokens);
 			
@@ -208,16 +211,30 @@ class c_bbbs_event
 			}
 		}
 		
-		if (!empty($category_text))
+		if (FALSE !== $category_text_offset)
 		{
 			// examples:
 			// [category:educational]
-			$category_text= substr($category_text, strlen(self::k_gcal_desc_key_category));
+			$category_text= substr($parse_text, $category_text_offset + strlen(self::k_gcal_desc_key_category));
 			$tokens= "]";
 			$category= strtok($category_text, $tokens);
 			if (!empty($category))
 			{
 				$this->m_data[self::k_key_category]= $category;
+			}
+		}
+		
+		if (FALSE !== $url_text_offset)
+		{
+			// examples:
+			// http://www.bigmentoring.org
+			// https://www.github.com
+			$url_text= substr($parse_text, $url_text_offset);
+			$tokens= " \t\n\r\0\x0B"; // chop at first whitepace (same tokens as trim() uses)
+			$url_text= strtok($url_text, $tokens);
+			if (!empty($url_text))
+			{
+				$this->m_data[self::k_key_url]= $url_text;
 			}
 		}
 		

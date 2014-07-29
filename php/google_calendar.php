@@ -130,7 +130,7 @@ class c_google_calendar extends c_event_source
 		$query= http_build_query($data);
 		$url= self::k_google_calendar_uri . urlencode($calendar_id) . '/events?' . $query;
 		$response= http_get($url, NULL, $info);
-		if (FALSE!=$response)
+		if (FALSE !== $response)
 		{
 			//print_r($info);
 			$body_result= http_parse_message($response)->body;
@@ -199,7 +199,7 @@ $bbbs_events= $gcal->get_events(NULL, NULL);
 
 if (isset($bbbs_events))
 {
-	echo(json_encode($bbbs_events));
+	echo(json_encode($bbbs_events, JSON_UNESCAPED_SLASHES));
 }
 else
 {
