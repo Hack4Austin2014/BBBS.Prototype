@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<HTML lang="en">
+<head>
+  <!-- META TAGS -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320--> 	<!-- prevents users from zooming in --> 
+	<meta name="author" content="Jose Manriquez">
+	<meta name = "description" content="This web app is an application designed for BBBS to find places and events for their matches.">
+	<meta name="keywords" content="BBBS, hack,hackathon, hack4austin, big, brothers, sisters, kids, places, locations, events, cheap, free, place, food, fun, children, child">
+
+	<base href="">
+	<title>BBBS: Events For Kids</title>
+
+  <!-- STYLES -->
+	<link rel="icon" href="http://www.bbbs.org/atf/cf/%7B8778d05c-7ccb-4dee-9d6e-70f27c016cc9%7D/ANIMATED_FAVICON.GIF" type="image/x-icon"><link rel="shortcut icon" href="http://www.bbbs.org/atf/cf/%7B8778d05c-7ccb-4dee-9d6e-70f27c016cc9%7D/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> <!--Bootstrap -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> <!-- Awesome Icons -->
+    <link rel="stylesheet" href="https://js.arcgis.com/3.9/js/esri/css/esri.css"> <!-- ESRI maps -->
+	<link rel="stylesheet" href="css/loading.css" type="text/css"> <!-- Loading bar -->
+		<!--[if lte IE 7]><link rel="css/old-centering.css /><![endif]-->
+	<link href="css/flat-ui.css" rel="stylesheet">
+
+	<link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">	
+	<link rel="stylesheet" href="css/main-style.css"> <!-- Custom CSS styles-->
+
+	<style>
+		/*
+		.small-menu {display: none !important;}
+		.large-menu {display: none! important;}
+		*/
+		.app-title {background: #008000;}
+		/* iphone */
+		@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+			img { max-width: 100%; }
+			.app-title {font-size: 27px;}
+		}
+
+
+		/* ipad */
+		@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+			img { max-width: 100%; }
+		}
+
+	
+      html, body, #mainWindow { 
+        height: 100%; width: 100%;  
+        margin: 0; padding: 0;
+		background: #eee;
+      } 
+
+  
+	  h1{color: #7AC142;}
+	  #mainWindow { margin: 0 !important; }
+      #map{ 
+        padding:0px;
+        border:solid 1px #343642;
+        margin:0px auto; 
+		overflow-x: hidden !important ;
+		height: 100%;
+		width: 100% ;
+      }
+		
+
+    .rows, .col { overflow-x: hidden; position: absolute; }
+    .rows { left: 0; right: 0; }
+    .col { top: 0; bottom: 0; }
+    .scroll-x { overflow-x: hidden !important; }
+    .scroll-y { overflow-y: auto; }
+
+
+	    .searchbtn
+	    {
+            background-image: url(images/search.png);
+            height: 34px; 
+            width: 34px; 
+            padding: 0; 
+            border: none; 
+	    }
+	</style>
+
+	
+
+</head>
+
+<body class="claro" onload="getLocation()">
+	
+	<!-- container -->
+	<div style ="width: 100%; height: 100%; ">
+	
+		<!-- NAV BAR FOR BIG SCREENS!!! -->
+		<div id="large-menu" class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="http://bbbsevents.org"><img src="images/logo.png" height="35x;" style="margin-top:-10px;"/></a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<!-- <li><a href="#">Events</a></li> -->
+						<li><a>Max drive time:&nbsp;<select id="TimeInput">
+									<option value="5" selected>5 min</option>
+									<option value="10">10 min</option>
+									<option value="15">15 min</option>
+									<option value="20">20 min</option>
+								</select></a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us <b class="caret"></b></a>
+							<span class="dropdown-arrow"></span>
+							<ul class="dropdown-menu" style="overflow: hidden;">
+								<li><a href="http://www.bigmentoring.org/">BBBS Central Texas</a></li>
+								<li><a href="#">The dev team</a></li>
+								<li class="divider"></li>
+								<li><a href="https://github.com/Hack4Austin2014/BBBS.Prototype">Support Us!</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#" onclick="getLocation();">Find Me</a></li>
+						<li>
+							<form class="navbar-form navbar-right" action="#" role="search">
+								<div class="form-group">
+									<div class="input-group">
+										<input class="form-control"  id="address" type="search" placeholder="Search Address">
+											<span class="input-group-btn">
+												<button id="locate" type="button" class="searchbtn" onclick="locate();"></button>
+											</span>
+										</input>
+									</div>
+								</div>
+							</form>
+						</li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+
+		<!-- MAIN WINDOW (MAP) -->
+		<div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'sidebar', gutters:false" class="body rows scroll-y scroll-x  style="height:100%;width: 100%;">
+			<div id="map" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+			</div>
+		</div>
+
+		<!-- NAV BAR FOR SMALL SCREENS!!! -->
+		<div id="small-menu" style="position: absolute; right: 10px; top: 100px;">
+			<div style ="z-index: 10; position: relative; padding: 2px 2px 0px 2px;">
+				<nav id="small-nav" class="navbar navbar-inverse navbar-embossed " role="navigation" style="display: none;">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+							<span class="sr-only">Toggle navigation</span>
+						</button>
+						<a class="navbar-brand" href="#"><img src="images/logo.png" alt="logo" height="35px;" style="margin-top:-10px;"/></a>
+					</div>
+					<div class="collapse navbar-collapse" id="navbar-collapse-01">
+					</div>
+				</nav>
+			</div>
+			<!-- /NAV BAR FOR MOBILE DEVICES SCREENS!!! -->
+			
+			<!-- event container -->
+			<div id="events-container" style="background: transparent; max-height:400px;  padding:2px; height: auto; width:350px; ">
+				<div  style="width:100%; ">
+					<div class="col-xs-12 app-title" style =" z-index: 1; position: relative; bgcolor: #008000;">Events for Kids</div>
+					<div id="loading" style=" margin: 0 auto; text-align: center; z-index: 12; background: #EFF0F2; margin-top: 0px; border-radius: 20px; padding-bottom: 10px;">Looking for Events<br>Please Wait<br>
+						<i class="fa fa-refresh fa-spin fa-lg fa-2x" style="color:#fff; padding-top: 5px; "></i>
+					</div>
+					<div class = "col-xs-12 hideElement" id="accordion" style ="z-index: 13; position: relative; height: 100%; width:100%;   background: #EFF0F2;">
+					</div>
+					<div id="accordionPaginator">
+						<a href="#" class="previousPage">Previous Page</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="nextPage">Next Page</a>
+					</div>
+				</div> <!-- row -->
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	
+	<!-- SCRIPTS -->
+	<!-- jQuery -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- jQuery UI (are we using this?) -->
+	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+	<!-- this is an optimized version of Dojo, built for deployment and not for development -->
+    <script src="//js.arcgis.com/3.9/"></script>
+	<!-- Firebase -->
+	<script src='//cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+	<script src='//cdn.firebase.com/js/simple-login/1.4.1/firebase-simple-login.js'></script>
+	<!-- Bootstrap -->
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<!-- application specific configuration settings -->
+	<script src="js/config.js"></script>
+	<!-- ESRI mapping functionality -->
+	<script src="js/mapping.js"></script>
+	<script src="js/pagination.js"></script>
+	
+	<script>
+		
+	var paginatorHandle = null;
+
+	jQuery(document).ready(function()
+	{
+		jQuery("#accordion").accordion({
+			autoHeight: false
+		});
+		paginatorHandle = jQuery("#dalist").paginateAccordion({
+				"currentPage": 0,
+				"itemsPerPage": 7,
+				"paginatorControl": jQuery("#accordionPaginator")
+		});
+		
+		// initial paginate call
+		paginatorHandle.paginate();
+		
+		jQuery("#accordionPaginator .nextPage").click(function() {
+			paginatorHandle.nextPage();
+		});
+		
+		jQuery("#accordionPaginator .previousPage").click(function() {
+			paginatorHandle.previousPage();
+		});
+		
+		jQuery("#accordionPaginator .goToPage").change(function() {
+			var pageIndex = parseInt($(this).val());
+			paginatorHandle.goToPage(pageIndex);
+		});
+	});
+	
+	$("#menu-toggle").click(function(){
+		$("#small-menu").css("top","80px");
+	});
+	
+	$(function() {
+		$('#accordion').accordion(
+			{event: "click"},
+			{heightStyle: "content"},
+			{collapsible: true}
+		);
+	});
+
+	$("#TimeInput").change(function()
+	{
+		console.log('Drive time changed...');
+		var addr = $('#address').val();
+
+		if (addr.length > 0)
+		{
+			locate(); 
+		}
+		else
+		{
+			getLocation();
+		}
+	});
+
+	function getLocation()
+	{
+		//jQuery('#large-menu').addClass('visible-md visible-lg showMenu');
+		if (navigator.geolocation)
+		{
+			navigator.geolocation.getCurrentPosition(showPosition);
+			$('#address').val('');
+			//window.setTimeout("redirect()",2000);
+		}
+		else
+		{
+			x.innerHTML="Geolocation is not supported by this browser.";
+		}
+	}
+		
+	function showPosition(position)
+	{
+		ZoomLocation(position.coords.longitude, position.coords.latitude); 
+	}
+		
+	function redirect()
+	{
+		$('#splashscreen').fadeOut('slow', function()
+		{
+			/*jQuery('#small-menu').addClass('visible-xs');*/
+			/*jQuery('#large-menu').addClass('visible-md visible-lg showMenu');*/
+			jQuery('#large-menu').removeClass('hideElement');
+		});
+		jQuery('#loading').addClass('deleteElement');
+		jQuery('#accordion').removeClass('hideElement');
+	}
+	
+</script>
+
+</body>
+</html>
