@@ -45,7 +45,7 @@
 			</tr>
 			<tr>
 				<td style="padding: 5px;">Price Range:</td>
-				<td style="padding: 5px;"><input type="number" value="0" id="pricerange"></td>
+				<td style="padding: 5px;"><input type="text" id="pricerange"></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px;">Rating:</td>
@@ -59,8 +59,8 @@
 				<td style="padding: 5px; vertical-align: top;">Promoted:</td>
 				<td style="padding: 5px;">
 					<form>
-						<input type="radio" name="promoted" value="true">&nbspYes<br>
-						<input type="radio" name="promoted" value="false">&nbspNo
+						<input type="radio" name="promoted" value="true">&nbsp;Yes<br>
+						<input type="radio" name="promoted" value="false">&nbsp;No
 					</form>
 				</td>
 			</tr>
@@ -76,25 +76,44 @@
     var arrayTest = new Array();
     var fb2 = new Firebase($FIREBASE_URL + '/data/events');
 
-    fb2.push({address : {street1: $("#street1").val(), street2: $("#street2").val(),
-      city: $("#city").val(), state: $("#state").val(), zip: $("#zip").val()},
-      agerange: $("#agerange").val(),
-      category: $("#category").val(), datebegin: $("#datebegin").val(),
-      description: $("#description").val(), interval: $("#interval").val(),
-      opentime: $("#opentime").val(), picture: $("#picture").val(),
-      pricerange: $("#pricerange").val(), rating: $("#rating").val(),
-      tag: $("#tag").val(), title: $("#title").val(), url: $("#url").val()
-    }, function(error){
-    	if(error){
-    		alert("There was an error saving to the database. For details, check the console.");
-    		console.log(error.getStack());
-    	}
-    	else{
-    		alert("The event was successfully submitted.");
-    	}
-    });
+    var address = $('#address').val();
+    var title = $('#title').val();
+    var agerange = $('#agerange').val();
+    var category = $('#category').val();
+    var datebegin = $('#datebegin').val();
+    var description = $('#description').val();
+    var schedule = $('#schedule').val();
+    var picture = $('#picture').val();
+    var pricerange = $('#pricerange').val();
+    var rating = parseInt($('#rating').val());
+    var url = $('#url').val();
+    var promoted = $('input[name=promoted]:checked').val() == 'true';
 
-    return false;
+    fb2.push(
+    	{
+	    	"address"		: address,
+	      	"title"			: title,
+	      	"agerange"		: agerange,
+	      	"category"		: category,
+	      	"datebegin"		: datebegin,
+	      	"description"	: description,
+	      	"schedule"		: schedule,
+	      	"picture"		: picture,
+	      	"pricerange"	: pricerange,
+	      	"rating"		: rating,
+	      	"url"			: url,
+	      	"promoted"		: promoted
+	    },
+		function(error){
+	    	if(error){
+	    		alert("There was an error saving to the database. For details, check the console.");
+	    		console.log(error.getStack());
+	    	}
+	    	else{
+	    		alert("The event was successfully submitted.");
+	    	}
+    	}
+    );
 
   });
 </script>

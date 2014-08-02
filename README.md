@@ -67,7 +67,7 @@ data : {
 
 	ageranges : [string]
 
-	priceranges : [string] 	//ie: [$, $$, $$$, $$$$, $$$$$]
+	priceranges : [string] 	//ie: [free, $, $$, $$$, $$$$, $$$$$]
 }
 ```
 
