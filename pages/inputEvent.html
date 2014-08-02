@@ -7,87 +7,62 @@
 		<table>
 			<tr>
 				<td style="padding: 5px;">Event Title:</td>
-				<td><input type="text" id="title"></td>
+				<td style="padding: 5px;"><input type="text" id="title"></td>
 			</tr>
 			<tr>
-				<td style="padding: 5px;">Address:</td>
+				<td style="padding: 5px; vertical-align: top;">Address:</td>
+				<td style="padding: 5px;">
+					<textarea id="address" cols="15" rows="3"></textarea>
+				</td>
 			</tr>
-			<tr>
-			  	<td style="padding: 5px; padding-left: 30px;">Street 1:</td>
-			  	<td><input type="text" id="street1"></td>
-			</tr>
-			  <tr>
-			  	<td style="padding: 5px; padding-left: 30px;">Street 2:</td>
-			  	<td><input type="text" id="street2"></td>
-			  </tr>
-			  <tr>
-			  	<td style="padding: 5px; padding-left: 30px;">City:</td>
-			  	<td><input type="text" id="city"></td>
-			  </tr>
-			  <tr>
-			  	<td style="padding: 5px; padding-left: 30px;">State:</td>
-			  	<td><input type="text" id="state"></td>
-			  </tr>
-			  <tr>
-			  	<td style="padding: 5px; padding-left: 30px;">Zip:</td>
-			  	<td><input type="text" id="zip"></td>
-			  </tr>
-			  
 			<tr>
 				<td style="padding: 5px;">Age Range:</td>
 				<td style="padding: 5px;">
-					<select id="agerange">
-					  <option>6 to 10</option>
-					  <option>11-14</option>
-					  <option>15-19</option>
-					</select>
+					<select id="agerange"></select>
 				</td>
 			</tr>
 			<tr>
 				<td style="padding: 5px;">Category:</td>
 				<td style="padding: 5px;">
-					<select id="category">
-					  <option>Educational</option>
-					  <option>Physical</option>
-					  <option>Social</option>
-					</select>
+					<select id="category"></select>
 				</td>
 			</tr>
 			<tr>
-				<td style="padding: 5px;">Date Begin:</td>
-				<td style="padding: 5px;"><input type="date" id="datebegin"></td>
+				<td style="padding: 5px;">Date/Time Begin:</td>
+				<td style="padding: 5px;"><input type="datetime-local" id="datebegin"></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px;  vertical-align: top;">Description:</td>
 				<td style="padding: 5px;"><textarea id="description"></textarea></td>
 			</tr>
 			<tr>
-				<td style="padding: 5px;">Interval (Days):</td>
-				<td style="padding: 5px;"><input type="text" id="interval"></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px;">Open Time:</td>
-				<td style="padding: 5px;"><input type="text" id="opentime"></td>
+				<td style="padding: 5px;  vertical-align: top;">Schedule <br>(human-readable):</td>
+				<td style="padding: 5px;"><textarea id="schedule"></textarea></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px;">Picture URL:</td>
 				<td style="padding: 5px;"><input type="url" id="picture"></td>
 			</tr>
 			<tr>
-				<td style="padding: 5px;">Highest Cost ($):</td>
-				<td style="padding: 5px;"><input type="number" value="0" id="pricerange"></td>
+				<td style="padding: 5px;">Price Range:</td>
+				<td style="padding: 5px;"><input type="text" id="pricerange"></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px;">Rating:</td>
-				<td style="padding: 5px;"><input type="number" min="1" max="5" value="5" id="rating"></td>
-			</tr>
-			<tr>
-				<td style="padding: 5px;">Tag:</td>
-				<td style="padding: 5px;"><input type="text" id="tag"></td>
+				<td style="padding: 5px;"><input type="number" id="rating"></td>
 			</tr>
 			<tr>
 				<td style="padding: 5px;">Url (include "http://" ):</td>
 				<td style="padding: 5px;"><input type="url" id="url"></td>
+			</tr>
+			<tr>
+				<td style="padding: 5px; vertical-align: top;">Promoted:</td>
+				<td style="padding: 5px;">
+					<form>
+						<input type="radio" name="promoted" value="true">&nbsp;Yes<br>
+						<input type="radio" name="promoted" value="false">&nbsp;No
+					</form>
+				</td>
 			</tr>
 		</table>
 		<br />
@@ -101,25 +76,44 @@
     var arrayTest = new Array();
     var fb2 = new Firebase($FIREBASE_URL + '/data/events');
 
-    fb2.push({address : {street1: $("#street1").val(), street2: $("#street2").val(),
-      city: $("#city").val(), state: $("#state").val(), zip: $("#zip").val()},
-      agerange: $("#agerange").val(),
-      category: $("#category").val(), datebegin: $("#datebegin").val(),
-      description: $("#description").val(), interval: $("#interval").val(),
-      opentime: $("#opentime").val(), picture: $("#picture").val(),
-      pricerange: $("#pricerange").val(), rating: $("#rating").val(),
-      tag: $("#tag").val(), title: $("#title").val(), url: $("#url").val()
-    }, function(error){
-    	if(error){
-    		alert("There was an error saving to the database. For details, check the console.");
-    		console.log(error.getStack());
-    	}
-    	else{
-    		alert("The event was successfully submitted.");
-    	}
-    });
+    var address = $('#address').val();
+    var title = $('#title').val();
+    var agerange = $('#agerange').val();
+    var category = $('#category').val();
+    var datebegin = $('#datebegin').val();
+    var description = $('#description').val();
+    var schedule = $('#schedule').val();
+    var picture = $('#picture').val();
+    var pricerange = $('#pricerange').val();
+    var rating = parseInt($('#rating').val());
+    var url = $('#url').val();
+    var promoted = $('input[name=promoted]:checked').val() == 'true';
 
-    return false;
+    fb2.push(
+    	{
+	    	"address"		: address,
+	      	"title"			: title,
+	      	"agerange"		: agerange,
+	      	"category"		: category,
+	      	"datebegin"		: datebegin,
+	      	"description"	: description,
+	      	"schedule"		: schedule,
+	      	"picture"		: picture,
+	      	"pricerange"	: pricerange,
+	      	"rating"		: rating,
+	      	"url"			: url,
+	      	"promoted"		: promoted
+	    },
+		function(error){
+	    	if(error){
+	    		alert("There was an error saving to the database. For details, check the console.");
+	    		console.log(error.getStack());
+	    	}
+	    	else{
+	    		alert("The event was successfully submitted.");
+	    	}
+    	}
+    );
 
   });
 </script>
